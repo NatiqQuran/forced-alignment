@@ -27,4 +27,4 @@ jobs:
         else
           TAG="${GITHUB_REF##*/}"
         fi
-        docker build . --file Dockerfile --tag natiq-api:$TAG
+        docker build . --file Dockerfile --tag forced-alignment:$TAG

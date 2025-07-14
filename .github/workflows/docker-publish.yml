@@ -31,5 +31,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ vars.DOCKER_HUB_USERNAME }}/nq-api:latest
-            ${{ vars.DOCKER_HUB_USERNAME }}/nq-api:${{ github.ref_name }}
+            ${{ vars.DOCKER_HUB_USERNAME }}/forced-alignment:latest
+            ${{ vars.DOCKER_HUB_USERNAME }}/forced-alignment:${{ github.ref_name }}

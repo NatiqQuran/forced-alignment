@@ -14,6 +14,7 @@ RUN apt-get update && \
         ffmpeg \
         git \
         perl \
+        build-essential \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
