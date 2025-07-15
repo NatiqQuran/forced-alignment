@@ -21,7 +21,24 @@ Start the FastAPI server with Uvicorn:
 uvicorn main:app --reload
 ```
 
-Visit [http://127.0.0.1:8000](http://127.0.0.1:8000) in your browser to see the welcome message.
+By default, the app runs on port 5000. You can set a custom port by setting the PORT environment variable:
+
+```bash
+export PORT=8080
+```
+
+## Running with Docker
+
+You can run the app using Docker:
+
+```bash
+docker run -p 5000:5000 \
+  -e PORT=5000 \
+  natiqquran/forced-alignment:latest
+```
+
+- The `-p 5000:5000` flag maps port 5000 of the container to port 5000 on your host. You can change the host port as needed.
+- The `-e PORT=5000` environment variable is optional; it defaults to 5000 if not set.
 
 ## /align Endpoint
 
