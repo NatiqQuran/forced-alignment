@@ -40,6 +40,29 @@ docker run -p 5000:5000 \
 - The `-p 5000:5000` flag maps port 5000 of the container to port 5000 on your host. You can change the host port as needed.
 - The `-e PORT=5000` environment variable is optional; it defaults to 5000 if not set.
 
+## Authentication (Optional)
+
+You can require authentication for the `/align` endpoint by setting the `ALIGN_SECRET_KEY` environment variable. If set, all requests must include the secret key in the `Authorization` header. If not set, authentication is disabled.
+
+**Example: Running with Docker and authentication**
+```bash
+docker run -p 5000:5000 \
+  -e PORT=5000 \
+  -e ALIGN_SECRET_KEY=your_secret_key \
+  natiqquran/forced-alignment:latest
+```
+
+**Example: Sending a request with curl**
+```bash
+curl -X POST "http://127.0.0.1:8000/align" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: your_secret_key" \
+  -d '{
+    "mp3_url": "https://example.com/audio.mp3",
+    "text": "your transcript here"
+  }'
+```
+
 ## /align Endpoint
 
 The `/align` endpoint performs forced alignment between an audio file (provided as an MP3 URL) and a given transcript. It returns word-level timestamps for the transcript aligned to the audio.
