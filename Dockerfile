@@ -1,3 +1,6 @@
+# Optional: Set ALIGN_SECRET_KEY to require authentication for the /align endpoint
+# Example: docker run -e ALIGN_SECRET_KEY=your_secret_key ...
+# If not set, authentication is disabled.
 # Use official Python image as base
 FROM python:3.10-slim
 

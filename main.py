@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Header, Depends
 from pydantic import BaseModel
 from typing import Optional
 import requests
@@ -17,6 +17,13 @@ from ctc_forced_aligner import (
 import torch
 
 app = FastAPI()
+
+ALIGN_SECRET_KEY = os.environ.get("ALIGN_SECRET_KEY")
+
+def verify_secret_key(Authorization: str = Header(None)):
+    if ALIGN_SECRET_KEY:
+        if Authorization != ALIGN_SECRET_KEY:
+            raise HTTPException(status_code=401, detail="Invalid or missing secret key.")
 
 class AlignRequest(BaseModel):
     mp3_url: str
@@ -39,7 +46,7 @@ def download_and_convert_mp3_to_wav(mp3_url: str) -> str:
     return wav_path
 
 @app.post("/align")
-def align_audio(request: AlignRequest):
+def align_audio(request: AlignRequest, _: None = Depends(verify_secret_key)):
     wav_path = download_and_convert_mp3_to_wav(request.mp3_url)
     device = "cuda" if torch.cuda.is_available() else "cpu"
     alignment_model, alignment_tokenizer = load_alignment_model(
